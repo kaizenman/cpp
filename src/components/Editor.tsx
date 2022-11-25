@@ -1,42 +1,36 @@
-import React, { useRef, useEffect, useState } from "react";
-import * as monaco from "monaco-editor";
+import "../styles.css";
 
-// @ts-ignore
-self.MonacoEnvironment = {
-  getWorkerUrl: function (_moduleId: any, label: string) {
-    if (label === "json") {
-      return "./json.worker.bundle.js";
-    }
-    if (label === "css" || label === "scss" || label === "less") {
-      return "./css.worker.bundle.js";
-    }
-    if (label === "html" || label === "handlebars" || label === "razor") {
-      return "./html.worker.bundle.js";
-    }
-    if (label === "typescript" || label === "javascript") {
-      return "./ts.worker.bundle.js";
-    }
-    return "./editor.worker.bundle.js";
-  },
+import { useState } from "react";
+import { default as MonacoEditor } from "@monaco-editor/react";
+import debounce from "lodash/debounce";
+
+interface IEditorProps {
+  onChange: (code: string | undefined) => void;
+}
+
+const Editor: React.FC<IEditorProps> = ({ onChange }: IEditorProps) => {
+  const [sourceCode, setSourceCode] = useState<string | undefined>("int main() {\n\n}\n");
+
+  return (
+    <div className="editor">
+      <MonacoEditor
+        width={`100%`}
+        language="cpp"
+        value={sourceCode}
+        theme="monokai"
+        onChange={debounce((v) => {
+          setSourceCode(v);
+          console.log("debounce");
+          onChange(v);
+        }, 2000)}
+        options={{
+          minimap: {
+            enabled: false,
+          },
+        }}
+      />
+    </div>
+  );
 };
 
-export const Editor: React.FC = () => {
-  const divEl = useRef<HTMLDivElement>(null);
-  let editor: monaco.editor.IStandaloneCodeEditor;
-
-  const code = ["#include <iostream>", "", "int main()", "{", '\tstd::cout << "Hello, world";', "}"].join("\n");
-
-  useEffect(() => {
-    if (divEl.current) {
-      editor = monaco.editor.create(divEl.current, {
-        value: code,
-        language: "cpp",
-      });
-    }
-    return () => {
-      editor.dispose();
-    };
-  }, []);
-
-  return <div className="Editor" ref={divEl}></div>;
-};
+export default Editor;

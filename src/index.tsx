@@ -1,16 +1,11 @@
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Editor } from './components/Editor';
-import { Console } from "./components/Console";
+import App from "./components/App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <div className="Container">
-      <Editor />
-      <Console />
-    </div>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

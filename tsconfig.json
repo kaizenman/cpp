@@ -4,7 +4,6 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "strict": true,
-    // "target": "ES6",
     "outDir": "./dist",
     "lib": ["ES6", "dom", "dom.iterable"],
     "types": [],
