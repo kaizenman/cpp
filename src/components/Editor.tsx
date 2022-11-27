@@ -1,15 +1,19 @@
 import "../styles.css";
 
-import { useState } from "react";
-import { default as MonacoEditor } from "@monaco-editor/react";
-import debounce from "lodash/debounce";
+import { useEffect, useState } from 'react';
+import { default as MonacoEditor } from '@monaco-editor/react';
+import debounce from 'lodash/debounce';
 
 interface IEditorProps {
   onChange: (code: string | undefined) => void;
 }
 
 const Editor: React.FC<IEditorProps> = ({ onChange }: IEditorProps) => {
-  const [sourceCode, setSourceCode] = useState<string | undefined>("int main() {\n\n}\n");
+  const [sourceCode, setSourceCode] = useState<string | undefined>('');
+
+  useEffect(() => {
+    onChange(sourceCode);
+  }, []);
 
   return (
     <div className="editor">
@@ -20,7 +24,6 @@ const Editor: React.FC<IEditorProps> = ({ onChange }: IEditorProps) => {
         theme="monokai"
         onChange={debounce((v) => {
           setSourceCode(v);
-          console.log("debounce");
           onChange(v);
         }, 2000)}
         options={{

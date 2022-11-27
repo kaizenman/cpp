@@ -5,33 +5,61 @@ import { useState } from "react";
 import Editor from "./Editor";
 import Executor from "./Executor";
 
-const url = "https://godbolt.org/api/compiler/gsnapshot/compile?options=-Wall";
+const url =
+  'https://godbolt.org/api/compiler/gsnapshot/compile?options=-Wall&skipAsm=true&executorRequest=true&filters=execute';
+const compile_assembly_url = 'https://gotbolt.org/api/compiler/gsnapshot/compile';
 
-const Playground: React.FC = () => {
+interface IPlaygroundProps {
+  challenge: string;
+}
+
+function encode_utf8(s: any) {
+  return unescape(encodeURIComponent(s));
+}
+
+function decode_utf8(s: any) {
+  return decodeURIComponent(escape(s));
+}
+
+var regex = /[^\u0000-\u00ff]/; // Small performance gain from pre-compiling the regex
+function containsDoubleByte(str: string) {
+  if (!str.length) return false;
+  if (str.charCodeAt(0) > 255) return true;
+  return regex.test(str);
+}
+
+const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps) => {
   const [response, setResponse] = useState<string | null>(null);
   const [error, setError] = useState<string | null | unknown>(null);
-  const [fetchCount, setFetchCount] = useState(0);
 
   function handleSourceCodeChange(code: string | undefined) {
-    if (!code) return;
-    const fetchData = async () => {
-      setFetchCount((c) => c + 1);
-      try {
-        const res = await fetch(url, { method: "POST", body: code });
-        const text = await res.text();
-        setResponse(text.substring(text.indexOf("\n") + 1));
-      } catch (error) {
-        // setError(error);
-      }
-    };
-    url && fetchData();
+    if (code) {
+      code += 'int main() {\n\n}\n';
+      code += challenge;
+
+      const fetchData = async () => {
+        try {
+          const res = await fetch(url, {
+            headers: {
+              'Content-Type': 'text/html; charset=utf-8',
+            },
+            method: 'POST',
+            body: code,
+          });
+
+          let text = await res.text();
+          text = text.replace(/\x1b\[[0-9;]*[mGKHF]/g, '');
+          setResponse(text.substring(text.indexOf('\n') + 1));
+        } catch (error) {}
+      };
+      url && fetchData();
+    }
   }
 
   return (
     <div className="playground">
       <Editor onChange={handleSourceCodeChange} />
-      {response && <Executor output={response} />}
-      {/* <h1>{fetchCount}</h1> */}
+      <Executor output={response!} />
     </div>
   );
 };
