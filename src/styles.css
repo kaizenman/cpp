@@ -5,14 +5,14 @@
 
 .navigator {
   width: 20%;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 .challenge-placeholder {
   width: 80%;
   display: flex;
   flex-direction: column;
-  border: 2px solid green;
+  /* border: 2px solid green; */
 }
 
 .challenge {
@@ -20,20 +20,21 @@
 }
 
 .playground {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   height: 80%;
   display: flex;
   flex-direction: row;
 }
 
 .editor {
+  height: 500px;
   width: 50%;
-  border: 3px solid purple;
+  /* border: 3px solid purple; */
 }
 
 .executor {
   width: 50%;
-  border: 3px solid chocolate;
+  /* border: 3px solid chocolate; */
   white-space: pre-wrap;
 }
 

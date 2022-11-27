@@ -1,31 +1,17 @@
 import "../styles.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Editor from "./Editor";
 import Executor from "./Executor";
+import { IChallenge } from "../challenges";
 
 const url =
-  'https://godbolt.org/api/compiler/gsnapshot/compile?options=-Wall&skipAsm=true&executorRequest=true&filters=execute';
+  'https://godbolt.org/api/compiler/gsnapshot/compile?options=-std=c%2B%2B20&-Wall&skipAsm=true&executorRequest=true&filters=execute';
 const compile_assembly_url = 'https://gotbolt.org/api/compiler/gsnapshot/compile';
 
 interface IPlaygroundProps {
-  challenge: string;
-}
-
-function encode_utf8(s: any) {
-  return unescape(encodeURIComponent(s));
-}
-
-function decode_utf8(s: any) {
-  return decodeURIComponent(escape(s));
-}
-
-var regex = /[^\u0000-\u00ff]/; // Small performance gain from pre-compiling the regex
-function containsDoubleByte(str: string) {
-  if (!str.length) return false;
-  if (str.charCodeAt(0) > 255) return true;
-  return regex.test(str);
+  challenge: IChallenge;
 }
 
 const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps) => {
@@ -34,8 +20,12 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps)
 
   function handleSourceCodeChange(code: string | undefined) {
     if (code) {
-      code += 'int main() {\n\n}\n';
-      code += challenge;
+      // code += 'int main() {\n\n}\n';
+      code += challenge.test;
+
+      console.log(code);
+
+      // console.log('fetch');
 
       const fetchData = async () => {
         try {
@@ -58,8 +48,8 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps)
 
   return (
     <div className="playground">
-      <Editor onChange={handleSourceCodeChange} />
-      <Executor output={response!} />
+      <Editor challenge={challenge.test} onChange={handleSourceCodeChange} />
+      {response && <Executor output={response} /> }
     </div>
   );
 };

@@ -1,53 +1,22 @@
+
+import { challenges, IChallenge } from "../challenges";
 import "../styles.css";
 
-const Navigator: React.FC = () => {
+interface INavigatorProps {
+  onChange: (challenge: IChallenge) => void;
+}
+
+const Navigator: React.FC<INavigatorProps> = ({onChange}: INavigatorProps) => {
   return (
     <div className="navigator">
       <ul>
-        <li>test</li>
-        <ul>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <ul>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-          </ul>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-        </ul>
-        <li>test</li>
-        <li>test</li>
-        <li>test</li>
-        <ul>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-        </ul>
-        <li>test</li>
-        <li>test</li>
-        <li>test</li>
-        <li>test</li>
-      </ul>
+        {challenges.map(challenge => 
+        
+        <li onClick={(e) => {
+          onChange(challenge); 
+        }} key={challenge.id}>
+        {challenge.title}
+        </li>)}</ul>
     </div>
   );
 };
