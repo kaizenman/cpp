@@ -20,8 +20,9 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps)
 
   function handleSourceCodeChange(code: string | undefined) {
     if (code) {
-      // code += 'int main() {\n\n}\n';
-      code += challenge.test;
+      code = code + `
+      `
+      + challenge.test;
 
       // console.log('fetch');
 

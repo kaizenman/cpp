@@ -15,14 +15,5 @@ export const challenges = [
     title: 'std::copyable',
     description: 'Implement std::copyable concept',
     test: test_copyable, 
-  },
-  {
-    id: 1,
-    title: 'bar',
-    description: 'Write constexpr function bar returning 5',
-    test:
-    `
-      static_assert(bar() == 5);
-    `
   }
 ];

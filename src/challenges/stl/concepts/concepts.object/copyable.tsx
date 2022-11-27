@@ -238,95 +238,95 @@ struct no_copy_constructor {
 
 
 
-static_assert(kzm::copyable<int>);
-static_assert(kzm::copyable<int volatile>);
-static_assert(kzm::copyable<int*>);
-static_assert(kzm::copyable<int const*>);
-static_assert(kzm::copyable<int volatile*>);
-static_assert(kzm::copyable<int volatile const*>);
-static_assert(kzm::copyable<int (*)()>);
+static_assert(copyable<int>);
+static_assert(copyable<int volatile>);
+static_assert(copyable<int*>);
+static_assert(copyable<int const*>);
+static_assert(copyable<int volatile*>);
+static_assert(copyable<int volatile const*>);
+static_assert(copyable<int (*)()>);
 
 struct S {};
-static_assert(kzm::copyable<S>);
-static_assert(kzm::copyable<int S::*>);
-static_assert(kzm::copyable<int (S::*)()>);
-static_assert(kzm::copyable<int (S::*)() noexcept>);
-static_assert(kzm::copyable<int (S::*)() &>);
-static_assert(kzm::copyable<int (S::*)() & noexcept>);
-static_assert(kzm::copyable<int (S::*)() &&>);
-static_assert(kzm::copyable<int (S::*)() && noexcept>);
-static_assert(kzm::copyable<int (S::*)() const>);
-static_assert(kzm::copyable<int (S::*)() const noexcept>);
-static_assert(kzm::copyable<int (S::*)() const&>);
-static_assert(kzm::copyable<int (S::*)() const & noexcept>);
-static_assert(kzm::copyable<int (S::*)() const&&>);
-static_assert(kzm::copyable<int (S::*)() const && noexcept>);
-static_assert(kzm::copyable<int (S::*)() volatile>);
-static_assert(kzm::copyable<int (S::*)() volatile noexcept>);
-static_assert(kzm::copyable<int (S::*)() volatile&>);
-static_assert(kzm::copyable<int (S::*)() volatile & noexcept>);
-static_assert(kzm::copyable<int (S::*)() volatile&&>);
-static_assert(kzm::copyable<int (S::*)() volatile && noexcept>);
-static_assert(kzm::copyable<int (S::*)() const volatile>);
-static_assert(kzm::copyable<int (S::*)() const volatile noexcept>);
-static_assert(kzm::copyable<int (S::*)() const volatile&>);
-static_assert(kzm::copyable<int (S::*)() const volatile & noexcept>);
-static_assert(kzm::copyable<int (S::*)() const volatile&&>);
-static_assert(kzm::copyable<int (S::*)() const volatile && noexcept>);
+static_assert(copyable<S>);
+static_assert(copyable<int S::*>);
+static_assert(copyable<int (S::*)()>);
+static_assert(copyable<int (S::*)() noexcept>);
+static_assert(copyable<int (S::*)() &>);
+static_assert(copyable<int (S::*)() & noexcept>);
+static_assert(copyable<int (S::*)() &&>);
+static_assert(copyable<int (S::*)() && noexcept>);
+static_assert(copyable<int (S::*)() const>);
+static_assert(copyable<int (S::*)() const noexcept>);
+static_assert(copyable<int (S::*)() const&>);
+static_assert(copyable<int (S::*)() const & noexcept>);
+static_assert(copyable<int (S::*)() const&&>);
+static_assert(copyable<int (S::*)() const && noexcept>);
+static_assert(copyable<int (S::*)() volatile>);
+static_assert(copyable<int (S::*)() volatile noexcept>);
+static_assert(copyable<int (S::*)() volatile&>);
+static_assert(copyable<int (S::*)() volatile & noexcept>);
+static_assert(copyable<int (S::*)() volatile&&>);
+static_assert(copyable<int (S::*)() volatile && noexcept>);
+static_assert(copyable<int (S::*)() const volatile>);
+static_assert(copyable<int (S::*)() const volatile noexcept>);
+static_assert(copyable<int (S::*)() const volatile&>);
+static_assert(copyable<int (S::*)() const volatile & noexcept>);
+static_assert(copyable<int (S::*)() const volatile&&>);
+static_assert(copyable<int (S::*)() const volatile && noexcept>);
 
-static_assert(kzm::copyable<std::vector<int> >);
-static_assert(kzm::copyable<std::deque<int> >);
-static_assert(kzm::copyable<std::forward_list<int> >);
-static_assert(kzm::copyable<std::list<int> >);
-static_assert(kzm::copyable<std::shared_ptr<std::unique_ptr<int> > >);
-static_assert(kzm::copyable<std::optional<std::vector<int> > >);
-static_assert(kzm::copyable<std::vector<int> >);
-static_assert(kzm::copyable<std::vector<std::unique_ptr<int> > >);
+static_assert(copyable<std::vector<int> >);
+static_assert(copyable<std::deque<int> >);
+static_assert(copyable<std::forward_list<int> >);
+static_assert(copyable<std::list<int> >);
+static_assert(copyable<std::shared_ptr<std::unique_ptr<int> > >);
+static_assert(copyable<std::optional<std::vector<int> > >);
+static_assert(copyable<std::vector<int> >);
+static_assert(copyable<std::vector<std::unique_ptr<int> > >);
 
-static_assert(kzm::copyable<has_volatile_member>);
-static_assert(kzm::copyable<has_array_member>);
+static_assert(copyable<has_volatile_member>);
+static_assert(copyable<has_array_member>);
 
 // Not objects
-static_assert(!kzm::copyable<void>);
-static_assert(!kzm::copyable<int&>);
-static_assert(!kzm::copyable<int const&>);
-static_assert(!kzm::copyable<int volatile&>);
-static_assert(!kzm::copyable<int const volatile&>);
-static_assert(!kzm::copyable<int&&>);
-static_assert(!kzm::copyable<int const&&>);
-static_assert(!kzm::copyable<int volatile&&>);
-static_assert(!kzm::copyable<int const volatile&&>);
-static_assert(!kzm::copyable<int()>);
-static_assert(!kzm::copyable<int (&)()>);
-static_assert(!kzm::copyable<int[5]>);
+static_assert(!copyable<void>);
+static_assert(!copyable<int&>);
+static_assert(!copyable<int const&>);
+static_assert(!copyable<int volatile&>);
+static_assert(!copyable<int const volatile&>);
+static_assert(!copyable<int&&>);
+static_assert(!copyable<int const&&>);
+static_assert(!copyable<int volatile&&>);
+static_assert(!copyable<int const volatile&&>);
+static_assert(!copyable<int()>);
+static_assert(!copyable<int (&)()>);
+static_assert(!copyable<int[5]>);
 
 // Not copy constructible or copy assignable
-static_assert(!kzm::copyable<std::unique_ptr<int> >);
+static_assert(!copyable<std::unique_ptr<int> >);
 
 // Not assignable
-static_assert(!kzm::copyable<int const>);
-static_assert(!kzm::copyable<int const volatile>);
-static_assert(kzm::copyable<const_copy_assignment const>);
-static_assert(!kzm::copyable<volatile_copy_assignment volatile>);
-static_assert(kzm::copyable<cv_copy_assignment const volatile>);
+static_assert(!copyable<int const>);
+static_assert(!copyable<int const volatile>);
+static_assert(copyable<const_copy_assignment const>);
+static_assert(!copyable<volatile_copy_assignment volatile>);
+static_assert(copyable<cv_copy_assignment const volatile>);
 
-static_assert(!kzm::copyable<no_copy_constructor>);
-static_assert(!kzm::copyable<no_copy_assignment>);
+static_assert(!copyable<no_copy_constructor>);
+static_assert(!copyable<no_copy_assignment>);
 
 static_assert(std::is_copy_assignable_v<no_copy_assignment_mutable>);
-static_assert(!kzm::copyable<no_copy_assignment_mutable>);
-static_assert(!kzm::copyable<derived_from_noncopyable>);
-static_assert(!kzm::copyable<has_noncopyable>);
-static_assert(!kzm::copyable<has_const_member>);
-static_assert(!kzm::copyable<has_cv_member>);
-static_assert(!kzm::copyable<has_lvalue_reference_member>);
-static_assert(!kzm::copyable<has_rvalue_reference_member>);
-static_assert(!kzm::copyable<has_function_ref_member>);
+static_assert(!copyable<no_copy_assignment_mutable>);
+static_assert(!copyable<derived_from_noncopyable>);
+static_assert(!copyable<has_noncopyable>);
+static_assert(!copyable<has_const_member>);
+static_assert(!copyable<has_cv_member>);
+static_assert(!copyable<has_lvalue_reference_member>);
+static_assert(!copyable<has_rvalue_reference_member>);
+static_assert(!copyable<has_function_ref_member>);
 
 static_assert(
     !std::assignable_from<deleted_assignment_from_const_rvalue&,
                           deleted_assignment_from_const_rvalue const>);
-static_assert(!kzm::copyable<deleted_assignment_from_const_rvalue>);
+static_assert(!copyable<deleted_assignment_from_const_rvalue>);
 
 int main(int, char**) { return 0; }
 `;

@@ -10,7 +10,7 @@ interface IEditorProps {
   onChange: (code: string | undefined) => void;
 }
 
-const compilationDelay = 1500;
+const compilationDelay = 2500;
 
 const Editor: React.FC<IEditorProps> = ({challenge, onChange }: IEditorProps) => {
   const [sourceCode, setSourceCode] = useState<string | undefined>('');
@@ -28,7 +28,7 @@ const Editor: React.FC<IEditorProps> = ({challenge, onChange }: IEditorProps) =>
         width={`100%`}
         language="cpp"
         value={sourceCode}
-        defaultValue="namespace kzm {}"
+        defaultValue=""
         theme="monokai"
         onChange={debounce((v) => {
           setSourceCode(v);
