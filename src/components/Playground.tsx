@@ -23,8 +23,6 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps)
       // code += 'int main() {\n\n}\n';
       code += challenge.test;
 
-      console.log(code);
-
       // console.log('fetch');
 
       const fetchData = async () => {
