@@ -2,38 +2,39 @@ import "../styles.css";
 
 import { useEffect, useState } from 'react';
 import { default as MonacoEditor } from '@monaco-editor/react';
-import debounce from 'lodash/debounce';
 import { IChallenge } from "../challenges";
 
 interface IEditorProps {
-  challenge: string;
+  challenge: IChallenge;
   onChange: (code: string | undefined) => void;
 }
 
-const compilationDelay = 2500;
 
 const Editor: React.FC<IEditorProps> = ({challenge, onChange }: IEditorProps) => {
-  const [sourceCode, setSourceCode] = useState<string | undefined>('');
+  const [code, setCode] = useState(challenge.code);
 
   useEffect(() => {
-    console.log('synchronization');
-    return () => {
-      console.log('cleanup');
+    console.log('next challenge');
+    setCode(challenge.code);
+  }, [challenge]);
+
+  function handleChange(src: string | undefined) {
+    if (src) {
+      setCode(src);
     }
-  }, [challenge])
+
+    onChange(src);
+  }
 
   return (
     <div className="editor">
       <MonacoEditor
         width={`100%`}
         language="cpp"
-        value={sourceCode}
+        value={code}
         defaultValue=""
         theme="monokai"
-        onChange={debounce((v) => {
-          setSourceCode(v);
-          onChange(v);
-        }, compilationDelay)}
+        onChange={handleChange}
         options={{
           minimap: {
             enabled: false,

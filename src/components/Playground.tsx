@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import Editor from "./Editor";
 import Executor from "./Executor";
 import { IChallenge } from "../challenges";
+import debounce from "lodash/debounce";
 
 const url =
   'https://godbolt.org/api/compiler/gsnapshot/compile?options=-std=c%2B%2B20&-Wall&skipAsm=true&executorRequest=true&filters=execute';
-const compile_assembly_url = 'https://gotbolt.org/api/compiler/gsnapshot/compile';
 
 interface IPlaygroundProps {
   challenge: IChallenge;
@@ -18,22 +18,20 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps)
   const [response, setResponse] = useState<string | null>(null);
   const [error, setError] = useState<string | null | unknown>(null);
 
-  function handleSourceCodeChange(code: string | undefined) {
+  const handleSourceCodeChange = debounce((code: string | undefined) => {
     if (code) {
-      code = code + `
+      const src = code + `
       `
       + challenge.test;
-
-      // console.log('fetch');
-
       const fetchData = async () => {
         try {
+          // console.log('fetch');
           const res = await fetch(url, {
             headers: {
               'Content-Type': 'text/html; charset=utf-8',
             },
             method: 'POST',
-            body: code,
+            body: src,
           });
 
           let text = await res.text();
@@ -43,12 +41,13 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps)
       };
       url && fetchData();
     }
-  }
+  }, 1500);
 
   return (
     <div className="playground">
-      <Editor challenge={challenge.test} onChange={handleSourceCodeChange} />
+      <Editor challenge={challenge} onChange={handleSourceCodeChange} />
       {response && <Executor output={response} /> }
+      {/* {compiling && <div>Compiling...</div> } */}
     </div>
   );
 };
