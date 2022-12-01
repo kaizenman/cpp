@@ -1,53 +1,48 @@
-import "../styles.css";
+import '../styles.css';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import Editor from "./Editor";
-import Executor from "./Executor";
-import { IChallenge } from "../challenges";
-import debounce from "lodash/debounce";
-
-const url =
-  'https://godbolt.org/api/compiler/gsnapshot/compile?options=-std=c%2B%2B20&-Wall&skipAsm=true&executorRequest=true&filters=execute';
+import Editor from './Editor';
+import Executor from './Executor';
+import { IChallenge } from '../challenges';
+import debounce from 'lodash/debounce';
+import { execute_only } from '../utils/godbolt_url_builder';
 
 interface IPlaygroundProps {
   challenge: IChallenge;
+  onSolved: (solved: boolean) => void;
 }
 
-const Playground: React.FC<IPlaygroundProps> = ({ challenge }: IPlaygroundProps) => {
+const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved }: IPlaygroundProps) => {
   const [response, setResponse] = useState<string | null>(null);
   const [error, setError] = useState<string | null | unknown>(null);
+  const debounceDelay = 1500;
+
+  useEffect(() => {
+    setResponse(null);
+  }, [challenge]);
 
   const handleSourceCodeChange = debounce((code: string | undefined) => {
     if (code) {
-      const src = code + `
-      `
-      + challenge.test;
-      const fetchData = async () => {
-        try {
-          // console.log('fetch');
-          const res = await fetch(url, {
-            headers: {
-              'Content-Type': 'text/html; charset=utf-8',
-            },
-            method: 'POST',
-            body: src,
-          });
-
-          let text = await res.text();
-          text = text.replace(/\x1b\[[0-9;]*[mGKHF]/g, '');
+      fetch(execute_only(['std=c++20', '-Wall']), {
+        method: 'POST',
+        body: `${code}\n${challenge.test}`,
+      })
+        .then((res) => res.text())
+        .then((text) => text.replace(/\x1b\[[0-9;]*[mGKHF]/g, ''))
+        .then((text) => {
+          onSolved(text.includes('# Execution result with exit code 0'));
           setResponse(text.substring(text.indexOf('\n') + 1));
-        } catch (error) {}
-      };
-      url && fetchData();
+        })
+        .catch((error) => setError(error));
     }
-  }, 1500);
+  }, debounceDelay);
 
   return (
     <div className="playground">
       <Editor challenge={challenge} onChange={handleSourceCodeChange} />
-      {response && <Executor output={response} /> }
-      {/* {compiling && <div>Compiling...</div> } */}
+      {response && <Executor output={response} />}
+      {error && <div>Internal error...</div>}
     </div>
   );
 };

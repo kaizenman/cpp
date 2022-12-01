@@ -13,7 +13,6 @@ export interface IChallenge {
   test: string,
 }
 
-
 export const challenges : IChallenge[] = [
   {
     id: 0,
