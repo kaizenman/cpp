@@ -4,6 +4,10 @@ import { add_volatile } from './challenges/type_traits/lvl1/add_volatile';
 import { conditional } from './challenges/type_traits/lvl1/conditional';
 import { dependent_type } from './challenges/type_traits/lvl1/dependent_type';
 import { enable_if } from './challenges/type_traits/lvl1/enable_if';
+import { integral_constant } from './challenges/type_traits/lvl1/integral_constant';
+import { remove_all_extents } from './challenges/type_traits/lvl1/remove_all_extents';
+import { remove_const } from './challenges/type_traits/lvl1/remove_const';
+import { remove_extent } from './challenges/type_traits/lvl1/remove_extent';
 
 export interface IChallenge {
   id: number,
@@ -55,5 +59,33 @@ export const challenges : IChallenge[] = [
     description: '',
     code: '',
     test: enable_if,
+  },
+  {
+    id: 6,
+    title: 'integral_constant, true_type, false_type',
+    description: '',
+    code: '',
+    test: integral_constant,
+  },
+  {
+    id: 7,
+    title: 'remove_all_extents',
+    description: '',
+    code: '',
+    test: remove_all_extents,
+  },
+  {
+    id: 8,
+    title: 'remove_const',
+    description: '',
+    code: '',
+    test: remove_const,
+  },
+  {
+    id: 9,
+    title: 'remove_extent',
+    description: '',
+    code: '',
+    test: remove_extent,
   }
 ];
