@@ -34,9 +34,9 @@ const Solver: React.FC<ISolverProps> = ({ challenges, onNext } : ISolverProps) =
       <div className="challenge"></div>
       <Playground challenge={activeChallenge} onSolved={handleSolved} />
       <div className="next-challange-placeholder">
-        {/* <button>Hint</button>
-        <button>Show solution</button> */}
-        <button className="next-challenge" disabled={!isSolved} onClick={handleNextChallenge}>Next challenge</button>
+        <button>Hint</button>
+        <button>Show solution</button>
+        <button disabled={!isSolved} onClick={handleNextChallenge}>Next challenge</button>
       </div>
     </div>
   );

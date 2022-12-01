@@ -1,35 +1,41 @@
 .body-placeholder {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: stretch;
 }
 
 .challenge-placeholder {
   width: 100%;
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: column;
+  /* min-height: 30em; */
   /* border: 2px solid green; */
+  /* height: 40em; */
+
 }
 
 .challenge {
-  height: 20%;
+  /* height: 10%; */
 }
 
 .playground {
   /* border: 2px solid red; */
-  /* height: 80%; */
+  /* height: 300px; */
   display: flex;
   flex-direction: row;
+
 }
 
 .next-challange-placeholder {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
-.next-challenge {
-  background-color: aqua;
-  border-radius: 14px;
-}
+/* .next-challenge {
+
+} */
 
 .search-container {
   display: flex;
@@ -60,8 +66,16 @@ input[type=text] {
   font-size: large;
 }
 
+button {
+  background-color: aqua;
+  border-radius: 14px;
+  min-width: 8em;
+}
+
 .editor {
-  height: 500px;
+  min-height: 35em;
+  justify-content: stretch;
+  /* height: 500px; */
   width: 50%;
   /* border: 3px solid purple; */
 }
