@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import Playground from './Playground';
 import { IChallenge } from '../challenges';
+import { Link } from "react-router-dom";
 
 interface ISolverProps {
   challenges: IChallenge[],
@@ -28,16 +29,17 @@ const Solver: React.FC<ISolverProps> = ({ challenges, onNext } : ISolverProps) =
   }
 
   return (
-    <div className="challenge-placeholder">
+    <div className="w-full flex flex-no-wrap flex-column">
       <h1>Try out some challenges</h1>
       <h2>{activeChallenge.title}</h2>
-      <div className="challenge"></div>
+      <div></div>
       <Playground challenge={activeChallenge} onSolved={handleSolved} />
-      <div className="next-challange-placeholder">
+      <div className="flex justify-content-space-between">
         <button>Hint</button>
         <button>Show solution</button>
         <button disabled={!isSolved} onClick={handleNextChallenge}>Next challenge</button>
       </div>
+      <Link to="/">Go to main page</Link>
     </div>
   );
 };

@@ -27,7 +27,7 @@ const Editor: React.FC<IEditorProps> = ({challenge, onChange }: IEditorProps) =>
   }
 
   return (
-    <div className="editor">
+    <div className="min-h-35em justify-content-stretch w-half">
       <MonacoEditor
         width={`100%`}
         language="cpp"

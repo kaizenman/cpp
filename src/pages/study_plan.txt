@@ -1,0 +1,279 @@
+Function templates
+	Traits
+	Requirements
+	Concepts
+	class vs typename
+	instantiation
+	specialization
+	explicit specialization
+	instantiation and specialization
+	deleting the specializations
+	non-type parameters
+	specialization by non-type parameters
+	type deduction before substitution
+	type deduction after substitution
+	type deduction of the qualified type
+	type dudcutoin of the more qualified type
+	partial type deduction
+	default template parameters
+	non-type parameter type deduction
+	specialized type deduction
+	rules of overloading
+	hidden names
+	operators
+	Koening lookup
+	Koening lookup and templates
+	General rules of overloading
+	Standard type coversions
+	User type conversions
+	Overloading and templates
+	Partial order of function templates
+	Ambiguity in type deduction
+
+Class templates and partial specializations
+	Partial specialization
+	Declaration points
+	Class templates
+	Dependent names in templates
+	Derivation of classes from templates
+	Too general templates
+	Specialization
+	Partial specialization
+	Simplifying Names in Specializations
+	Examples of partial specialization
+	Less specific, less generalized?
+	Specialization Restriction
+	Specialization and LSP
+	Member Templates
+	Disambiguation
+	Full Specialization Example
+	Parameterization of Methods
+	Adapter types
+	Type inference
+	Type deduction by class constructors
+	Type deduction hints (C++17)
+	Type deduction without a constructor
+	Implicit hints
+
+Name Resolution and One Definition Rule
+	Two phase name lookup
+	Vandervoort example
+	Dependent Type Names
+Modules (Physical code structure, dependencies and name visibility)
+	Translation unit
+	Headers
+	Binding classes
+	Binding issues
+	One definition rule
+	Additional condition on types
+	Inline
+	Specializations and inline
+	ODR usage
+	Discarded statements
+	Types and Components
+	Logical and physical relationships
+	Additional Header Issues
+	Precompiled headers
+	The first module
+	Symbols
+	module linkage
+	Using the first module
+	Importing a module into a module
+	Library Modularization
+	Cyclic Dependencies
+	Name conflicts
+	Modules and Namespaces
+	What can't be exported
+	Global Fragment
+	Partitions
+	Export and implementation
+	Private Fragments
+	Reachability
+	Modules and build systems
+	The key advantage of inclusions
+	Modules and Macros
+	Global fragment and discarded refs
+SFINAE
+	Laziness and energy
+	When C++ Behaves Lazily
+	SFINAE
+	SFINAE and errors
+	Non-systemic SFINAE. HasFooBar
+	Guerrilla SFINAE
+	Space of types and values
+	Mapping values to types
+	Mapping types to sfinae-traits
+	True and False for Types
+	The Benefits of Variable Templates
+	SFINAE logic: types and values
+	Qualifiers and modifiers
+	void_t
+	The superiority of the systems approach
+	is_detected
+Classic Metaprogramming
+	Some issues with void_t
+	Rule for aliases
+	Huggins trick
+	conditional type
+	SFINAE-OUT example
+	ODR is more important than everything else
+	Dummy parameter
+	Template pointer
+	integer argument
+	One off function
+	enable_if
+	Development of metaprogramming
+	The discovery of metaprogramming
+	Factorial
+	Two Computing Models
+	integer square root
+	Loki
+	Boost::MPL
+	Boost::Fusion
+	Metric abstraction
+	Structural adaptation
+Constant expressions (Variables, compile-time functions and objects, custom suffixes)
+	Maximum Type Sizes
+	The problem of constancy
+	Return by constant value
+	floating const
+	What is known at compile time
+	Restriction on constexpr variables
+	Constexpr means const?
+	Constexpr control flow
+	Alternative to SFINAE
+	if constexpr constraints
+	Again about metaprograms
+	Restrictions in C++11
+	Error processing
+	Restrictions in C++14
+	Logarithm in C++14
+	Not always contexpr
+	Guarantees
+	consteval
+	constinit
+	if consteval
+	Not everywhere constexpr
+	UB cases for contexpr functions
+	Treats
+	core constant expressions
+	Compile time OOP
+	Custom Literal Types
+	Arithmetic
+	Containers
+	String concatenation
+	Virtual contexpr functions
+	constexpr new
+	Custom suffix
+	Variable suffixes
+	Physical quantities
+	Computing quadrants
+	index_sequence
+	Replace mpl::find
+	Mixed Computing
+	Physical quantities in boost::hana
+	Composition of quantities
+Type deduction(rvalue references and type deduction)
+	Reference Bindings
+	Rvalue references
+	Cross-linking
+	Variable anonymization
+	Overload by reference
+	Move constructors
+	Special semantics
+	What could be copy and move ctors
+	Rules for implicit methods
+	An interesting consequence
+	Rule of Five
+	Moved-from state
+	Method annotation
+	Rules for auto
+	Identity and movablility
+	Reference collapcing rule
+	universal references
+	non-universal references
+	Motivation for decltype
+	Decltype: What is the exact type?
+	Rules for decltype(id-expr)
+	value abstraction
+	value abstraction: memory-chunk
+	value abstraction: declval
+	decltype(auto)
+	almost_move
+	Lvalues
+	Xvalues
+	Concept notation syntax
+	perfect forwarding
+	std::forward
+	Simple forwarding cases
+	Josutis example
+	Copy reduciton
+	Concepts come to the rescue
+	Positive constraint
+Variadic templates (Variadic templates and concepts, packs, folds and semantics)
+	Parameter Packs
+	C-style ellipsis
+	Parameter Packs
+	disclosure patterns
+	C++ style ellipsis
+	forward or auto?
+	Opening packs
+	Wrong disclosure
+	expander proxy
+	blocking comma
+	Syntactic oddities
+	Folds
+	AddSpace
+	Sometimes easier without folds: if constexpr
+	Exotic collection
+	Mixed lot with empty packs
+	Summation
+	Concepts: Bundle Notation Syntax
+	Pack requirement for summation
+	Let's hang a simple constraint
+	good concept
+	Optionality of convolutions in templates
+	The Importance of Rollups in Concepts
+	Heavy classes
+	Heavy class container
+	Small placement issues
+	Greedy Matching
+	emplace
+Lambda Expressions (Functors, Closures, and Functional Programming)
+	New function syntax
+	What is lambda expression and closure?
+	Callables
+	std::invoke
+	Lavaway projection
+	Generic lambda expressions
+	Methodologically entertaining example
+	Trying to use the concept
+	Explicit Template Arguments
+	Capturing Arguments
+	Capture by value: mutable and not
+	Capture by reference
+	Constancy is propagated
+	Capture with rename
+	Capture with variable packs
+	currying
+	Capture everything
+	The main rule of capture
+	Local context
+	Capture List
+	We store the packs in std::tuple
+	Creating a tuple (tuple)
+	Reference binding with a tuple
+	Reference binding in detail
+	Bindings for native classes
+	Forwarding to a tuple
+	Using a tuple as arguments
+	Erase via std::any
+	Variants
+	Explicit std::visit
+	"Overload" lambda
+	tail recursion
+	Exotic Option: visiting Pairs
+	Type erasure via std::function
+	std::move_only_function
+	New recursive lambdas
+	New patterns for std::visit

@@ -1,24 +1,32 @@
 
-import { challenges, IChallenge } from "../challenges";
+import { Link } from "react-router-dom";
 import "../styles.css";
+import { articles} from "./Learn";
 
-interface INavigatorProps {
-  onChange: (challenge: IChallenge) => void;
-}
-
-const Navigator: React.FC<INavigatorProps> = ({onChange}: INavigatorProps) => {
-  return (
-    <div className="navigator">
-      <ul>
-        {challenges.map(challenge => 
-        
-        <li onClick={(e) => {
-          onChange(challenge); 
-        }} key={challenge.id}>
-        {challenge.title}
-        </li>)}</ul>
+const Navigator: React.FC = () => {
+  return <div>
+  <div>
+    <nav>
+      <div></div>
+    </nav>
+    <div>
+      <aside>
+        <nav>
+          <ul>
+       {articles.map(article =>
+            <li key={article.id}>
+              <Link to={`learn/${article.url}`}>
+                <h1>{article.title}</h1>
+              </Link>
+            </li>
+          )}
+          </ul>
+        </nav>
+      </aside>
     </div>
-  );
+  </div>
+</div>
+
 };
 
 export default Navigator;

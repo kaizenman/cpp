@@ -39,7 +39,7 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved }: IPlaygr
   }, debounceDelay);
 
   return (
-    <div className="playground">
+    <div className="flex flex-row">
       <Editor challenge={challenge} onChange={handleSourceCodeChange} />
       {response && <Executor output={response} />}
       {error && <div>Internal error...</div>}

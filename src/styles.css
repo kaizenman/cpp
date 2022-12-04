@@ -1,67 +1,65 @@
-.body-placeholder {
+.flex {
   display: flex;
+}
+
+.flex-row {
   flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-no-wrap {
   flex-wrap: nowrap;
+}
+
+.justify-content-stretch {
   justify-content: stretch;
 }
 
-.challenge-placeholder {
-  width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  /* min-height: 30em; */
-  /* border: 2px solid green; */
-  /* height: 40em; */
-
-}
-
-.challenge {
-  /* height: 10%; */
-}
-
-.playground {
-  /* border: 2px solid red; */
-  /* height: 300px; */
-  display: flex;
-  flex-direction: row;
-
-}
-
-.next-challange-placeholder {
-  display: flex;
+.justify-content-space-between {
   justify-content: space-between;
 }
 
-/* .next-challenge {
-
-} */
-
-.search-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  /* border: 3px solid purple; */
-}
-
-.search-input-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 3em;
-  height: 2em;
-  align-items: stretch;
+.justify-content-space-around {
   justify-content: space-around;
-  width: 100%;
-  /* border: 3px solid red; */
 }
 
-.search {
-  /* border: 3px solid blue; */
+.align-items-stretch {
+  align-items: stretch;
+}
+
+.w-full {
+  width: 100%
+}
+
+.w-30em {
   width: 30em;
 }
 
+.m-top-3em {
+  margin-top: 3em;
+}
+
+.h-2em {
+  height: 2em;
+}
+
+.min-h-35em {
+  min-height: 35em;
+}
+
+.w-half {
+  width: 50%;
+}
+
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
 input[type=text] {
-  padding: 12px 20px;
+  padding: 12px 20px ;
   border-radius: 10px;
   font-size: large;
 }
@@ -70,19 +68,5 @@ button {
   background-color: aqua;
   border-radius: 14px;
   min-width: 8em;
-}
-
-.editor {
-  min-height: 35em;
-  justify-content: stretch;
-  /* height: 500px; */
-  width: 50%;
-  /* border: 3px solid purple; */
-}
-
-.executor {
-  width: 50%;
-  /* border: 3px solid chocolate; */
-  white-space: pre-wrap;
 }
 

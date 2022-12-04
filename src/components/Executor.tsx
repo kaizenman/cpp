@@ -7,7 +7,7 @@ interface IExecutorProps {
 
 const Executor: React.FC<IExecutorProps> = ({ output }: IExecutorProps) => {
   return (
-    <div className="executor">
+    <div className="w-half whitespace-pre-wrap">
       <MonacoEditor value={output}></MonacoEditor>
     </div>
   );
