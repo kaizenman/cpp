@@ -14,17 +14,17 @@ import Practice from "./components/Practice";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "cpp",
     element: <App /> ,
     children: []
   },
   {
-    path: "learn/:url",
+    path: "cpp/learn/:url",
     loader: articleLoader,
     element: <Learn />
   },
   {
-    path: "challenges",
+    path: "cpp/challenges",
     element: <Practice />
   }
 ]);

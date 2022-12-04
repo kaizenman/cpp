@@ -30,7 +30,7 @@ const Search: React.FC<ISearchProps> = ({ onSubmit }: ISearchProps) => {
               } 
             } />
         </div>
-        <Link to="/">Go to main page</Link>
+        <Link to="/cpp">Go to main page</Link>
       </div>
     </>
   );

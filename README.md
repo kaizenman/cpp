@@ -1,2 +1,2 @@
 # Demo
-https://kaizenman.github.io/
+https://kaizenman.github.io/cpp/

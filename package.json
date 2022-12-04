@@ -1,7 +1,7 @@
 {
   "name": "monaco-esm-webpack-typescript",
   "version": "0.1.0",
-  "homepage": "https://kaizenman.github.io",
+  "homepage": "https://kaizenman.github.io/cpp",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

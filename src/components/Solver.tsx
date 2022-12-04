@@ -39,7 +39,7 @@ const Solver: React.FC<ISolverProps> = ({ challenges, onNext } : ISolverProps) =
         <button>Show solution</button>
         <button disabled={!isSolved} onClick={handleNextChallenge}>Next challenge</button>
       </div>
-      <Link to="/">Go to main page</Link>
+      <Link to="/cpp">Go to main page</Link>
     </div>
   );
 };

@@ -54,7 +54,7 @@ const Learn: React.FC = () => {
       {article && <><h1>{article.title}</h1>
       <article>
         {article.chapters.map(chapter => <div key={chapter.id}>{chapter.title}</div>)}
-        <Link to={`/`}>Go back</Link>
+        <Link to={`/cpp`}>Go back</Link>
       </article></>
       }
     </main>
