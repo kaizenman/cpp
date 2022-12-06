@@ -11,6 +11,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "lodash.debounce": "^4.0.8",
     "react-scripts": "^5.0.1",
     "webpack": "^5.75.0"

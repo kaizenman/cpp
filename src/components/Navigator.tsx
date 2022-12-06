@@ -12,11 +12,11 @@ const Navigator: React.FC = () => {
     <div>
       <aside>
         <nav>
-          <ul>
+          <ul className="list-group list-group-vertical">
        {articles.map(article =>
-            <li key={article.id}>
+            <li className="list-group-item" key={article.id}>
               <Link to={`learn/${article.url}`}>
-                <h1>{article.title}</h1>
+                <span>{article.title}</span>
               </Link>
             </li>
           )}

@@ -11,6 +11,8 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import Learn from "./components/Learn";
 import Practice from "./components/Practice";
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 const router = createBrowserRouter([
   {
