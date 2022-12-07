@@ -9,6 +9,7 @@ import { traits } from "../pages/function_templates/traits";
 interface SubChapter {
   id: string;
   title: string;
+  content: string;
   codeSnippet?: string;
 }
 
@@ -16,6 +17,7 @@ export interface IChapter {
   id: number;
   title: string;
   codeSnippet?: string;
+  subChapters?: SubChapter[];
 }
 
 export interface ITryChallenge {
@@ -40,7 +42,15 @@ export interface IArticle {
 
 export const articles: IArticle[] = [
   { id: 0, url: 'function_templates', title: 'function templates',  chapters: [traits, requirements, concepts] },
-  { id: 1, url: 'class_templates',    title: 'class templates',     chapters: [class_templates, declaration_points, dependent_names]}
+  { id: 1, url: 'class_templates',    title: 'class templates',     chapters: [class_templates, declaration_points, dependent_names]},
+  { id: 2, url: 'name_resolution_ODR', title: 'name resolution and ODR', chapters: []},
+  { id: 3, url: 'modules', title: 'modules', chapters: []},
+  { id: 4, url: 'SFINAE', title: 'SFNIAE', chapters: []},
+  { id: 5, url: 'Classic metaprogramming      dsdsf', title: 'Classic metaprogramming', chapters: []},
+  { id: 6, url: 'Constant expressions', title: 'Constant expressions', chapters: []},
+  { id: 7, url: 'Type deduction', title: 'Type deduction', chapters: []},
+  { id: 8, url: 'Variadic templates', title: 'Variadic templates', chapters: []},
+  { id: 9, url: 'Lambda expressions', title: 'Lambda expressions', chapters: []}
 ];
 
 export function articleLoader( { params }: any ): IArticle | undefined {

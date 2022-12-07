@@ -7,7 +7,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: 'development',
   entry: {
-      app: './src/index.tsx',
+    //   app: './src/index.tsx',
       'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
       'json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
       'css.worker': 'monaco-editor/esm/vs/language/css/css.worker',
@@ -47,12 +47,15 @@ module.exports = {
           {
               test: /\.ttf$/,
               use: ['file-loader']
+          },
+          {
+              test: /\\.(png|jp(e*)g|svg|gif)$/, use: ['file-loader'],
           }
       ]
   },
   plugins: [
       new HtmlWebPackPlugin({
-          template: 'src/index.html'
+        //   template: 'src/index.html'
       }),
       isDevelopment && new ReactRefreshWebpackPlugin()
   ].filter(Boolean)
