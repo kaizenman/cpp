@@ -39,7 +39,12 @@ function cmake_sources(sources: Sources): string {
     .join(' ');
 }
 
-export function build_execute_cmake_request(sources: Sources, compilerOptions?: string[]) : Request  {
+export function build_execute_cmake_request(
+  sources: Sources,
+  compiler: string,
+  compilerOptions?: string[],
+  local? : boolean
+) : Request  {
 
   const files: SourceFile[] = Object.keys(sources).map((key) => { return { filename: key, contents: sources[key].value, };});
   const cpp_file_names = cmake_sources(sources);
@@ -79,7 +84,7 @@ export function build_execute_cmake_request(sources: Sources, compilerOptions?: 
     allowStoreCodeDebug: boolean;
   } = {
     source: cmake_file.contents,
-    compiler: "g112",
+    compiler: compiler,
     options: {
       userArguments: user_arguments,
       executeParameters: execute_parameters,
@@ -112,8 +117,12 @@ export function build_execute_cmake_request(sources: Sources, compilerOptions?: 
     body: JSON.stringify(requestBody),
     redirect: 'follow'
   };
+
+  if (local) {
+    return ['http://localhost:10240/api/compiler/' + compiler + '/cmake', requestOptions];
+  }
   
-   return ['https://godbolt.org/api/compiler/g103/cmake', requestOptions];
+  return ['https://godbolt.org/api/compiler/' + compiler + '/cmake', requestOptions];
 }
 
 
