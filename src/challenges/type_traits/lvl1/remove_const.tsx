@@ -1,5 +1,6 @@
-export const remove_const = `
-#include <type_traits>
+export const remove_const = `#include <type_traits>
+#include "traits/remove_const.h"
+
 template <class T, class U>
 void test_remove_const_imp()
 {

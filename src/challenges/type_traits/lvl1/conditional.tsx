@@ -1,5 +1,5 @@
-export const conditional = `
-#include <type_traits>
+export const conditional = `#include <type_traits>
+#include "traits/conditional.h"
 
 int main(int, char**)
 {

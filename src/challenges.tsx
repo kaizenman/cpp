@@ -34,40 +34,71 @@ export const challenges : IChallenge[] = [
       'main.cpp': {
         name: 'main.cpp',
         language: 'c++',
-        value: 
-`#include <type_traits>
- #include "traits/add_const.h"
-
-int main(int, char**)
-{
-  static_assert(std::is_same_v<const int, add_const_t<int>>);
-
-  return 0;
-}`
+        value: add_const,
       },
-    'traits/add_const.h': {
-      name: 'traits/add_const.h',
-      language: 'c++',
-      value: ``
+      'traits/add_const.h': {
+        name: 'traits/add_const.h',
+        language: 'c++',
+        value: ``
+      },
     },
+    main: 'traits/add_const.h',
   },
-  
-  main: 'traits/add_const.h',
+  {
+    id: 1,
+    title: 'add_cv, add_cv_t',
+    description: '',
+    sources: {
+      'main.cpp': {
+        name: 'main.cpp',
+        language: 'c++',
+        value: add_cv,
+      },
+      'traits/add_cv.h': {
+        name: 'traits/add_cv.h',
+        language: 'c++',
+        value: ``
+      },
+    },
+    main: 'traits/add_cv.h',
+  },
+  {
+    id: 2,
+    title: 'add_volatile, add_volatile_t',
+    description: '',
+    sources: {
+      'main.cpp': {
+        name: 'main.cpp',
+        language: 'c++',
+        value: add_volatile,
+      },
+      'traits/add_volatile.h': {
+        name: 'traits/add_volatile.h',
+        language: 'c++',
+        value: ``
+      },
+    },
+    main: 'traits/add_volatile.h',
+  },
+  {
+    id: 3,
+    title: 'conditional, conditional_t',
+    description: '',
+    sources: {
+      'main.cpp': {
+        name: 'main.cpp',
+        language: 'c++',
+        value: conditional,
+      },
+      'traits/conditional.h': {
+        name: 'traits/conditional.h',
+        language: 'c++',
+        value: ``
+      },
+    },
+    main: 'traits/conditional.h',
+  },
 
-    // sources: {
-    //   'unit_test.cpp': {
-    //     name: 'unit_test.cpp',
-    //     language: 'c++',
-    //     value: add_const,
-    //   },
-    //   'add_const.h': {
-    //     name: 'add_const.h',
-    //     language: 'c++',
-    //     value: '',
-    //   }
-    // },
-    // main: 'add_const.h',
-  },
   // {
   //   id: 1,
   //   title: 'add_cv, add_cv_t',

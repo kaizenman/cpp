@@ -33,7 +33,12 @@ const Solver: React.FC<ISolverProps> = ({ challenges, onNext } : ISolverProps) =
       <h1>Try out some challenges</h1>
       <h2>{activeChallenge.title}</h2>
       <div></div>
-      <Playground challenge={activeChallenge} onSolved={handleSolved} />
+      <Playground challenge={activeChallenge} onSolved={handleSolved} settings={
+        {
+          compiler: 'g103',
+          compilerOptions: ['-std=c++20', '-O3', '-flto'],
+          local: false,
+        }}/>
       <div className="flex justify-content-space-between">
         <button>Hint</button>
         <button>Show solution</button>

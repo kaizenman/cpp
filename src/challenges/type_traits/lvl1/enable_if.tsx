@@ -1,5 +1,5 @@
-export const enable_if = `
-#include <type_traits>
+export const enable_if = `#include <type_traits>
+#include "traits/enable_if.h"
 
 int main(int, char**)
 {

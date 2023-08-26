@@ -1,4 +1,5 @@
-import { IChapter } from '../../components/Learn'
+import { challenges } from '../../challenges'
+import { IChapter, ITryChallenge, ITryChallenges } from '../../components/Learn'
 
 export const traits: IChapter = {
   id: 0,
@@ -16,4 +17,14 @@ export const traits: IChapter = {
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`},
   ]
 }
+
+export const traits_challenges: ITryChallenges = [
+  {
+    id: 0,
+    title: 'add_const, add_const_t',
+    challenge: challenges[0],
+    solution: '',
+    hint: '',
+  },
+]
 

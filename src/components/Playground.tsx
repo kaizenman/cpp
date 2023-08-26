@@ -8,12 +8,19 @@ import { IChallenge, Sources } from '../challenges';
 import debounce from 'lodash/debounce';
 import { build_execute_cmake_request } from '../utils/godbolt_url_builder';
 
+interface ICompilerSettings {
+  compiler: string;
+  compilerOptions: string[];
+  local: boolean;
+}
+
 interface IPlaygroundProps {
   challenge: IChallenge;
   onSolved: (solved: boolean) => void;
+  settings: ICompilerSettings;
 }
 
-const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved }: IPlaygroundProps) => {
+const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved, settings}: IPlaygroundProps) => {
   const [response, setResponse] = useState<string | null>('');
   const [error, setError] = useState<string | null | unknown>(null);
   const debounceDelay = 1500;
@@ -24,36 +31,20 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved }: IPlaygr
   
   const handleSourceCodeChange = debounce((sources: Sources | undefined) => {
     if (sources) {
-      const [request, options] = build_execute_cmake_request(sources, 'g103', ['-std=c++20', '-O3', '-flto'], false);
+      const [request, options] = build_execute_cmake_request(sources,
+                                                             settings.compiler,
+                                                             settings.compilerOptions,
+                                                             settings.local);
       fetch(request, options)
         .then(response => response.text())
-        .then((text) => text.replace(/\x1b\[[0-9;]*[mGKHF]/g, ''))
         .then((text) => {
           const parsedData = JSON.parse(text);
-          console.log(parsedData);
-
-          const hasNonZeroCode = parsedData.buildsteps.some((step: any) => step.code !== 0);
-
-          if (hasNonZeroCode) {
-              console.log("There is a step with a nonzero code value.");
-          } else {
-              console.log("All steps have a code value of zero.");
-          }
-
-          // Extract and concatenate the "text" contents
-          const concatenatedText = parsedData.buildsteps
+          onSolved(parsedData.buildsteps.every((step: any) => step.code == 0));
+          setResponse(parsedData.buildsteps
             .flatMap((step: any) => step.stderr.length > 0 ? step.stderr : step.stdout)
             .map((output: any) => output.text)
-            .join('\n');
-
-          function removeAnsiEscapeCodes(text: string) {
-            return text.replace(/\x1B[@-_][0-?]*[ -/]*[@-~]/g, "");
-          }
-          
-          const cleanedText = removeAnsiEscapeCodes(concatenatedText);
-
-          onSolved(!hasNonZeroCode);
-          setResponse(cleanedText);
+            .join('\n')
+            .replace(/\x1B[@-_][0-?]*[ -/]*[@-~]/g, ""));
         })
         .catch((error) => setError(error));
     }

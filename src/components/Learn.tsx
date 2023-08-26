@@ -4,7 +4,9 @@ import { declaration_points } from "../pages/class_templates/declaration_points"
 import { dependent_names } from "../pages/class_templates/dependent_names";
 import { concepts } from "../pages/function_templates/concepts";
 import { requirements } from "../pages/function_templates/requirements";
-import { traits } from "../pages/function_templates/traits";
+import { traits, traits_challenges } from "../pages/function_templates/traits";
+import { IChallenge } from "../challenges";
+import Practice from "./Practice";
 
 interface SubChapter {
   id: string;
@@ -23,30 +25,28 @@ export interface IChapter {
 export interface ITryChallenge {
   id: number;
   title: string;
-  codeSnippet: string;
+  challenge: IChallenge;
   solution: string;
   hint?: string;
 }
 
-export interface ITryChallenges {
-  challenges: ITryChallenge[];
-}
+export type ITryChallenges = ITryChallenge[];
 
 export interface IArticle {
   id: number;
   url: string;
   title: string;
   chapters: IChapter[];
-  challenges?: ITryChallenges;
+  try_challenges?: ITryChallenges;
 }
 
 export const articles: IArticle[] = [
-  { id: 0, url: 'function_templates', title: 'function templates',  chapters: [traits, requirements, concepts] },
+  { id: 0, url: 'function_templates', title: 'function templates',  chapters: [traits, requirements, concepts], try_challenges: traits_challenges },
   { id: 1, url: 'class_templates',    title: 'class templates',     chapters: [class_templates, declaration_points, dependent_names]},
   { id: 2, url: 'name_resolution_ODR', title: 'name resolution and ODR', chapters: []},
   { id: 3, url: 'modules', title: 'modules', chapters: []},
   { id: 4, url: 'SFINAE', title: 'SFNIAE', chapters: []},
-  { id: 5, url: 'Classic metaprogramming      dsdsf', title: 'Classic metaprogramming', chapters: []},
+  { id: 5, url: 'Classic metaprogramming', title: 'Classic metaprogramming', chapters: []},
   { id: 6, url: 'Constant expressions', title: 'Constant expressions', chapters: []},
   { id: 7, url: 'Type deduction', title: 'Type deduction', chapters: []},
   { id: 8, url: 'Variadic templates', title: 'Variadic templates', chapters: []},
@@ -61,11 +61,17 @@ const Learn: React.FC = () => {
   const article = useLoaderData() as unknown as IArticle | undefined;
 
   return <main>
-      {article && <><h1>{article.title}</h1>
-      <article>
-        {article.chapters.map(chapter => <div key={chapter.id}>{chapter.title}</div>)}
-        <Link to={`/cpp`}>Go back</Link>
-      </article></>
+      {article && 
+      <>
+        <h1>{article.title}</h1>
+        <article>
+          {article.chapters.map(chapter => <div key={chapter.id}>{chapter.title}</div>)}
+          {article.try_challenges && <Practice challenges={article.try_challenges.map((ch) => {
+            return ch.challenge;
+          })} />}
+          <Link to={`/cpp`}>Go back</Link>
+        </article>
+      </>
       }
     </main>
 };

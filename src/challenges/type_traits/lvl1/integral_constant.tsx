@@ -1,6 +1,7 @@
 export const integral_constant = `
 #include <type_traits>
 #include <cassert>
+#include "traits/integral_constant.h"
 
 int main(int, char**)
 {

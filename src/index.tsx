@@ -25,10 +25,10 @@ const router = createBrowserRouter([
     loader: articleLoader,
     element: <Learn />
   },
-  {
-    path: "cpp/challenges",
-    element: <Practice />
-  }
+  // {
+  //   path: "cpp/challenges",
+  //   element: <Practice />
+  // }
 ]);
 
 ReactDOM.render(

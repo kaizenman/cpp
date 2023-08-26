@@ -1,4 +1,5 @@
 export const add_volatile = `#include <type_traits>
+#include <traits/add_volatile.h>
 
 template <class T, class U>
 void test_add_volatile_imp()

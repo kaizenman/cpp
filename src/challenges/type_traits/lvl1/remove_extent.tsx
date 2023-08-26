@@ -1,5 +1,5 @@
-export const remove_extent = `
-#include <type_traits>
+export const remove_extent = `#include <type_traits>
+#include "traits/remove_extent.h"
 
 enum Enum {zero, one_};
 

@@ -1,6 +1,5 @@
 export const add_cv = `#include <type_traits>
-
-#include <type_traits>
+#include "traits/add_cv.h"
 
 int main(int, char**)
 {
