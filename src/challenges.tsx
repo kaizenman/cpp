@@ -34,53 +34,25 @@ export const challenges : IChallenge[] = [
       'main.cpp': {
         name: 'main.cpp',
         language: 'c++',
-        value: `#include <fmt/core.h>
-#include "io.h"
+        value: 
+`#include <type_traits>
+ #include "traits/add_const.h"
 
-int main() {
-    fmt::print("File contents:\\n{}", get_data());
-} `
+int main(int, char**)
+{
+  static_assert(std::is_same_v<const int, add_const_t<int>>);
+
+  return 0;
+}`
       },
-      'resources/hello.txt': {
-        name: 'resources/hello.txt',
-        language: 'text',
-        value: `
-Hello, world!
-
-----
-The End
-`
-      },
-      'io.cpp': {
-        name: 'io.cpp',
-        language: 'c++',
-        value: `#include <fstream>
-#include <string>
-
-std::string get_data() {
-    std::ifstream ifs("resources/hello.txt");
-    using It = std::istreambuf_iterator<char>;
-    return std::string(It(ifs), It());
-}
-`
-    },
-    'io.h': {
-      name: 'io.h',
+    'traits/add_const.h': {
+      name: 'traits/add_const.h',
       language: 'c++',
-      value: `#ifndef FOO_H
-#define FOO_H
-
-#include <string>
-
-std::string get_data();
-
-#endif
-
-`
+      value: ``
     },
   },
   
-  main: 'main.cpp',
+  main: 'traits/add_const.h',
 
     // sources: {
     //   'unit_test.cpp': {

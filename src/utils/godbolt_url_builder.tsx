@@ -5,8 +5,6 @@ function formatUrl(str: string): string {
   return str;
 }
 
-// Define interfaces for complex objects
-
 export type Request = [input: RequestInfo | URL, init?: RequestInit | undefined];
 
 interface CompilerOptions {
@@ -34,30 +32,32 @@ export interface SourceFile {
   contents: string;
 }
 
-// function find_cpp_files(sources: Sources): SourceFile[] {
-//   return Object.keys(sources)
-//     .filter((key) => { return sources[key].language === 'c++' && key.endsWith('.cpp'); })
-//     .map((key) => { return { filename: key, contents: sources[key].value, };});
-// }
+function cmake_sources(sources: Sources): string {
+  return Object.keys(sources)
+    .filter((key) => { return sources[key].language === 'c++' && (key.endsWith('.cpp') || key.endsWith('.h')); })
+    .map(source => sources[source].name)
+    .join(' ');
+}
 
 export function build_execute_cmake_request(sources: Sources, compilerOptions?: string[]) : Request  {
 
   const files: SourceFile[] = Object.keys(sources).map((key) => { return { filename: key, contents: sources[key].value, };});
-  const user_arguments = '-std=c++20 -O3 -flto';
+  const cpp_file_names = cmake_sources(sources);
+  
+  const user_arguments = compilerOptions ? compilerOptions.join(' ') : '';
   const execute_parameters = {
-    args: 'resources/hello.txt',
+    args: '',
     stdin: ''
   };
   const cmake_args = '-DCMAKE_BUILD_TYPE=RelWithDebInfo';
   const cmake_file: SourceFile = {
     filename: 'CMakeLists.txt',
-    contents: `project(shapes)
-  
-    cmake_minimum_required(VERSION 3.5)
+    contents: `cmake_minimum_required(VERSION 3.5)
+    project(shapes)
+    
     
     add_executable(the_executable
-        io.cpp
-        main.cpp)
+        ${cpp_file_names})
     
     target_link_libraries(the_executable
         fmtd)
@@ -66,10 +66,7 @@ export function build_execute_cmake_request(sources: Sources, compilerOptions?: 
 
   // Define the headers
   const myHeaders = new Headers();
-  myHeaders.append("accept", "application/json, text/javascript, */*; q=0.01");
   myHeaders.append("content-type", "application/json");
-  myHeaders.append("cookie", "privacy_status=dcc79570ddaf4bd8");
-  myHeaders.append("x-requested-with", "XMLHttpRequest");
 
 
   // Define the request body
@@ -122,15 +119,12 @@ export function build_execute_cmake_request(sources: Sources, compilerOptions?: 
 
 export function execute_only(compilerOptions?: string[]) {
   // let result = 'http://localhost:10240/api/compiler/g11/compile'; // g++ 11.x
-  
   // cmake
   let result = 'http://localhost:10240/api/compiler/g11/cmake';
-  
   // let result = 'https://godbolt.org/api/compiler/gsnapshot/compile';
   if (compilerOptions) {
     // result += `?options=${compilerOptions.map(option => `-${option}&`).join()}`;
   }
-
   // result += 'skipAsm=true&executorRequest=true&filters=execute';
   result = formatUrl(result);
   console.log(result);

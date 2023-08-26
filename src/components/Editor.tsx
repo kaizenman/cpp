@@ -6,26 +6,43 @@ import { IChallenge, Sources } from "../challenges";
 
 interface IEditorProps {
   challenge: IChallenge;
-  onChange: (code: string | undefined) => void;
+  onChange: (code: Sources | undefined) => void;
 }
 
-
 const Editor: React.FC<IEditorProps> = ({ challenge, onChange }: IEditorProps) => {
-  const [fileName, setFileName] = useState('main.cpp');
-  const file = challenge.sources[fileName];
+  const [fileName, setFileName] = useState<string>(challenge.main);
 
-  const [code, setCode] = useState(file?.value || '');
-
-  useEffect(() => {
-    if (file) {
-      setCode(file.value);
+  // Initialize the state with the content of all files from challenge.sources
+  const [filesContent, setFilesContent] = useState(() => {
+    const initialContent: Sources = {};
+    console.log('here')
+    for (const name in challenge.sources) {
+      initialContent[name] = {
+        name: name,
+        language: challenge.sources[name].language,
+        value: challenge.sources[name].value,
+      };
     }
-  }, [file]);
+    return initialContent;
+  });
 
-  function handleChange(src: string | undefined) {
-    if (src) {
-      setCode(src);
-      onChange(src);
+  function handleTabClick(name: string) {
+    console.log('handleTabClick', name)
+    setFileName(name);
+  }
+
+  function handleEditorChange(value: string | undefined) {
+    if (value !== undefined) {
+      // Update the content of the active file in the state
+      setFilesContent({
+        ...filesContent,
+        [fileName]: {
+          ...filesContent[fileName],
+          value: value,
+        },
+      });
+
+      onChange(filesContent);
     }
   }
 
@@ -35,7 +52,7 @@ const Editor: React.FC<IEditorProps> = ({ challenge, onChange }: IEditorProps) =
         {Object.keys(challenge.sources).map((name) => (
           <button
             key={name}
-            onClick={() => setFileName(name)}
+            onClick={() => handleTabClick(name)}
             className={name === fileName ? 'active-tab' : ''}
           >
             {name}
@@ -43,23 +60,17 @@ const Editor: React.FC<IEditorProps> = ({ challenge, onChange }: IEditorProps) =
         ))}
       </div>
 
-      <MonacoEditor        
+      <MonacoEditor
+        key={fileName} // Remount editor when file name changes
         height="500px"
         language="cpp"
-        value={code}
+        value={filesContent[fileName].value} // Use content from local state
         theme="monokai"
-        onChange={handleChange}
+        onChange={handleEditorChange} // Update on editor change
         options={{
-          automaticLayout: true,
           minimap: {
             enabled: false,
           },
-          wordWrap: 'off',
-          scrollBeyondLastLine: false,
-          scrollbar: {
-            vertical: 'hidden',
-            horizontal: 'hidden',
-          }
         }}
       />
       {/* Rest of your component */}
