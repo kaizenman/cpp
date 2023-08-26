@@ -1,3 +1,4 @@
+import { wrap } from "lodash";
 import "../styles.css";
 
 import { default as MonacoEditor } from '@monaco-editor/react';
@@ -8,7 +9,7 @@ interface IExecutorProps {
 const Executor: React.FC<IExecutorProps> = ({ output }: IExecutorProps) => {
   return (
     <div className="w-half whitespace-pre-wrap">
-      <MonacoEditor value={output}></MonacoEditor>
+      <MonacoEditor height="500px" value={output} options={{wordWrap: "on"}}></MonacoEditor>
     </div>
   );
 };

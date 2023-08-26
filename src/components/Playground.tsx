@@ -6,7 +6,7 @@ import Editor from './Editor';
 import Executor from './Executor';
 import { IChallenge } from '../challenges';
 import debounce from 'lodash/debounce';
-import { execute_only } from '../utils/godbolt_url_builder';
+import { build_execute_cmake_request } from '../utils/godbolt_url_builder';
 
 interface IPlaygroundProps {
   challenge: IChallenge;
@@ -14,21 +14,19 @@ interface IPlaygroundProps {
 }
 
 const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved }: IPlaygroundProps) => {
-  const [response, setResponse] = useState<string | null>(null);
+  const [response, setResponse] = useState<string | null>('');
   const [error, setError] = useState<string | null | unknown>(null);
   const debounceDelay = 1500;
 
   useEffect(() => {
     setResponse(null);
   }, [challenge]);
-
+  
   const handleSourceCodeChange = debounce((code: string | undefined) => {
     if (code) {
-      fetch(execute_only(['std=c++20', '-Wall']), {
-        method: 'POST',
-        body: `${code}\n${challenge.test}`,
-      })
-        .then((res) => res.text())
+      const [request, options] = build_execute_cmake_request(challenge.sources);
+      fetch(request, options)
+        .then(response => response.text())
         .then((text) => text.replace(/\x1b\[[0-9;]*[mGKHF]/g, ''))
         .then((text) => {
           onSolved(text.includes('# Execution result with exit code 0'));
