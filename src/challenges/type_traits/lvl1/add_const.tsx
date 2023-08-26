@@ -1,5 +1,5 @@
 export const add_const = `#include <type_traits>
-#include "traits/add_const.h
+#include "traits/add_const.h"
 
 int main(int, char**)
 {
