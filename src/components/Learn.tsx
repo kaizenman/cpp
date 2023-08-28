@@ -66,7 +66,7 @@ const Learn: React.FC = () => {
         <h1>{article.title}</h1>
         <article>
           {article.chapters.map(chapter => <div key={chapter.id}>{chapter.title}</div>)}
-          {article.try_challenges && <Practice challenges={article.try_challenges.map((ch) => {
+          {article.try_challenges && <Practice theme='dark' challenges={article.try_challenges.map((ch) => {
             return ch.challenge;
           })} />}
           <Link to={`/cpp`}>Go back</Link>

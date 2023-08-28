@@ -2,14 +2,26 @@ import { wrap } from "lodash";
 import "../styles.css";
 
 import { default as MonacoEditor } from '@monaco-editor/react';
+import { useEffect, useState } from "react";
 interface IExecutorProps {
+  theme: string;
   output: string;
 }
 
-const Executor: React.FC<IExecutorProps> = ({ output }: IExecutorProps) => {
+const Executor: React.FC<IExecutorProps> = ({theme, output }: IExecutorProps) => {   
+  
+  const [monacoTheme, setMonacoTheme] = useState<string>('vs-dark');
+
+  console.log('Theme: ', theme)
+
+  useEffect(() => {
+    console.log('here')
+    setMonacoTheme(theme === 'light' ? 'vs-light' : 'vs-dark');
+  }, [theme])
+
   return (
-    <div className="w-half whitespace-pre-wrap">
-      <MonacoEditor height="500px" value={output} options={{wordWrap: "on"}}></MonacoEditor>
+    <div>
+      <MonacoEditor height="500px" value={output} theme={monacoTheme} options={{wordWrap: "on"}}></MonacoEditor>
     </div>
   );
 };

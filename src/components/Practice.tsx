@@ -6,10 +6,11 @@ import Solver from "./Solver";
 import { IChallenge } from "../challenges";
 
 interface IPracticeProps {
+  theme: string;
   challenges: IChallenge[];
 }
 
-const Practice: React.FC<IPracticeProps> = ({challenges}) => {
+const Practice: React.FC<IPracticeProps> = ({theme, challenges}) => {
   // const [chs, setChs] = useState<IChallenge[]>([]);
   const [chs, setChs] = useState<IChallenge[]>(challenges);
   
@@ -31,9 +32,9 @@ const Practice: React.FC<IPracticeProps> = ({challenges}) => {
   }
 
   return (
-    <div className="flex flex-row flex-no-wrap justify-content-stretch">
+    <div className="border border-warning">
       {/* { chs.length === 0 && <Search onSubmit={handleSubmit} />} */}
-      { chs.length > 0 && <Solver challenges={chs} onNext={removeChallenge} /> }
+      { chs.length > 0 && <Solver theme={theme} challenges={chs} onNext={removeChallenge} /> }
     </div>
   );
 };

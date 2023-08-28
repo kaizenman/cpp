@@ -15,12 +15,13 @@ interface ICompilerSettings {
 }
 
 interface IPlaygroundProps {
+  theme: string;
   challenge: IChallenge;
   onSolved: (solved: boolean) => void;
   settings: ICompilerSettings;
 }
 
-const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved, settings}: IPlaygroundProps) => {
+const Playground: React.FC<IPlaygroundProps> = ({theme, challenge, onSolved, settings}: IPlaygroundProps) => {
   const [response, setResponse] = useState<string | null>('');
   const [error, setError] = useState<string | null | unknown>(null);
   const debounceDelay = 1500;
@@ -51,10 +52,14 @@ const Playground: React.FC<IPlaygroundProps> = ({ challenge, onSolved, settings}
   }, debounceDelay);
 
   return (
-    <div className="flex flex-row">
-      <Editor challenge={challenge} onChange={handleSourceCodeChange} />
-      {response && <Executor output={response} />}
-      {error && <div>Internal error...</div>}
+    <div className="d-flex flex-row flex-nowrap align-items-stretch">
+      <div className="w-50">
+        <Editor theme={theme} challenge={challenge} onChange={handleSourceCodeChange} />
+      </div>
+      <div className="w-50">
+        {response && <Executor theme={theme} output={response} />}
+        {error && <div>Internal error...</div>}
+      </div>
     </div>
   );
 };

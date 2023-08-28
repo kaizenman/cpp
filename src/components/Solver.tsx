@@ -7,11 +7,12 @@ import { IChallenge } from '../challenges';
 import { Link } from "react-router-dom";
 
 interface ISolverProps {
+  theme: string;
   challenges: IChallenge[],
   onNext: (id: number) => void; 
 }
 
-const Solver: React.FC<ISolverProps> = ({ challenges, onNext } : ISolverProps) => {
+const Solver: React.FC<ISolverProps> = ({theme, challenges, onNext } : ISolverProps) => {
   const [activeChallenge, setActiveChallenge] = useState<IChallenge>(challenges[0]);
   const [isSolved, setIsSolved] = useState(false);
 
@@ -29,17 +30,16 @@ const Solver: React.FC<ISolverProps> = ({ challenges, onNext } : ISolverProps) =
   }
 
   return (
-    <div className="w-full flex flex-no-wrap flex-column">
+    <div>
       <h1>Try out some challenges</h1>
       <h2>{activeChallenge.title}</h2>
-      <div></div>
-      <Playground challenge={activeChallenge} onSolved={handleSolved} settings={
+      <Playground theme={theme} challenge={activeChallenge} onSolved={handleSolved} settings={
         {
           compiler: 'g103',
           compilerOptions: ['-std=c++20', '-O3', '-flto'],
           local: false,
         }}/>
-      <div className="flex justify-content-space-between">
+      <div>
         <button>Hint</button>
         <button>Show solution</button>
         <button disabled={!isSolved} onClick={handleNextChallenge}>Next challenge</button>
