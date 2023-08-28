@@ -32,7 +32,7 @@ const Practice: React.FC<IPracticeProps> = ({theme, challenges}) => {
   }
 
   return (
-    <div className="border border-warning">
+    <div>
       {/* { chs.length === 0 && <Search onSubmit={handleSubmit} />} */}
       { chs.length > 0 && <Solver theme={theme} challenges={chs} onNext={removeChallenge} /> }
     </div>
