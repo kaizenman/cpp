@@ -15,7 +15,7 @@ const Navigator: React.FC = () => {
           <ul className="list-group list-group-vertical">
        {articles.map(article =>
             <li className="list-group-item" key={article.id}>
-              <Link to={`learn/${article.url}`}>
+              <Link to={`learn/${article.title}`}>
                 <span>{article.title}</span>
               </Link>
             </li>

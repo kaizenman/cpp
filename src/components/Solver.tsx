@@ -30,21 +30,23 @@ const Solver: React.FC<ISolverProps> = ({theme, challenges, onNext } : ISolverPr
   }
 
   return (
-    <div>
-      <h1>Try out some challenges</h1>
-      <h2>{activeChallenge.title}</h2>
+    <div className="mt-5">
+      <h2 className="mt-2">Try out some challenges</h2>
+      {activeChallenge.title}
       <Playground theme={theme} challenge={activeChallenge} onSolved={handleSolved} settings={
         {
           compiler: 'g103',
-          compilerOptions: ['-std=c++20', '-O3', '-flto'],
+          compilerOptions: ['-std=c++20', '-O3', '-flto', '-pthread'],
           local: false,
         }}/>
-      <div>
+      {/* <div className="mt-5">
         <button>Hint</button>
         <button>Show solution</button>
         <button disabled={!isSolved} onClick={handleNextChallenge}>Next challenge</button>
+      </div> */}
+      <div className="mt-2">
+        <Link to="/cpp">Go to main page</Link>
       </div>
-      <Link to="/cpp">Go to main page</Link>
     </div>
   );
 };

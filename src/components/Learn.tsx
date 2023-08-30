@@ -4,15 +4,17 @@ import { declaration_points } from "../pages/class_templates/declaration_points"
 import { dependent_names } from "../pages/class_templates/dependent_names";
 import { concepts } from "../pages/function_templates/concepts";
 import { requirements } from "../pages/function_templates/requirements";
-import { traits, traits_challenges } from "../pages/function_templates/traits";
 import { IChallenge } from "../challenges";
 import Practice from "./Practice";
+import { generic_programming } from "../pages/generic_programming";
 
 interface SubChapter {
   id: string;
   title: string;
+  description?: string;
   content: string;
   codeSnippet?: string;
+  challenges?: IChallenge[];
 }
 
 export interface IChapter {
@@ -34,27 +36,29 @@ export type ITryChallenges = ITryChallenge[];
 
 export interface IArticle {
   id: number;
-  url: string;
   title: string;
   chapters: IChapter[];
   try_challenges?: ITryChallenges;
 }
 
 export const articles: IArticle[] = [
-  { id: 0, url: 'function_templates', title: 'function templates',  chapters: [traits, requirements, concepts], try_challenges: traits_challenges },
-  { id: 1, url: 'class_templates',    title: 'class templates',     chapters: [class_templates, declaration_points, dependent_names]},
-  { id: 2, url: 'name_resolution_ODR', title: 'name resolution and ODR', chapters: []},
-  { id: 3, url: 'modules', title: 'modules', chapters: []},
-  { id: 4, url: 'SFINAE', title: 'SFNIAE', chapters: []},
-  { id: 5, url: 'Classic metaprogramming', title: 'Classic metaprogramming', chapters: []},
-  { id: 6, url: 'Constant expressions', title: 'Constant expressions', chapters: []},
-  { id: 7, url: 'Type deduction', title: 'Type deduction', chapters: []},
-  { id: 8, url: 'Variadic templates', title: 'Variadic templates', chapters: []},
-  { id: 9, url: 'Lambda expressions', title: 'Lambda expressions', chapters: []}
+  { 
+    id: 0, title: 'Templates',
+           chapters: [ generic_programming,]
+  },
+  { id: 1, title: 'Some test content',     chapters: [class_templates, declaration_points, dependent_names]},
+  { id: 2, title: 'name resolution and ODR', chapters: []},
+  { id: 3, title: 'modules', chapters: []},
+  { id: 4, title: 'SFNIAE', chapters: []},
+  { id: 5, title: 'Classic metaprogramming', chapters: []},
+  { id: 6, title: 'Constant expressions', chapters: []},
+  { id: 7, title: 'Type deduction', chapters: []},
+  { id: 8, title: 'Variadic templates', chapters: []},
+  { id: 9, title: 'Lambda expressions', chapters: []}
 ];
 
 export function articleLoader( { params }: any ): IArticle | undefined {
-  return articles.find((article => article.url === params.url));
+  return articles.find((article => article.title === params.title));
 }
 
 const Learn: React.FC = () => {
@@ -62,8 +66,8 @@ const Learn: React.FC = () => {
 
   return <main>
       {article && 
-      <>
-        <h1>{article.title}</h1>
+      <div>
+        <h1 className="border border-warning">{article.title}</h1>
         <article>
           {article.chapters.map(chapter => <div key={chapter.id}>{chapter.title}</div>)}
           {article.try_challenges && <Practice theme='dark' challenges={article.try_challenges.map((ch) => {
@@ -71,7 +75,7 @@ const Learn: React.FC = () => {
           })} />}
           <Link to={`/cpp`}>Go back</Link>
         </article>
-      </>
+      </div>
       }
     </main>
 };

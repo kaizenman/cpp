@@ -9,12 +9,26 @@ import { remove_all_extents } from './challenges/type_traits/lvl1/remove_all_ext
 import { remove_const } from './challenges/type_traits/lvl1/remove_const';
 import { remove_extent } from './challenges/type_traits/lvl1/remove_extent';
 
+export interface SourceFile {
+  name: string;
+  language: string;
+  content: string;
+  internal: boolean;
+};
+
+export interface TestCase {
+  test_suite: string;
+  test_case: string;
+};
+
+export type Tests = {
+  sources: Sources;
+  test_cases: TestCase[];
+  static_asserts: string[];
+};
+
 export type Sources = {
-  [key: string]: {
-    name: string;
-    language: string;
-    value: string;
-  };
+  [key: string]: SourceFile;
 };
 
 export interface IChallenge {
@@ -22,144 +36,92 @@ export interface IChallenge {
   title: string,
   description: string,
   sources: Sources,
-  main: string,
+  tests: Tests,
 }
 
-export const challenges : IChallenge[] = [
-  {
-    id: 0,
-    title: 'add_const, add_const_t',
-    description: '',
-    sources: {
-      'main.cpp': {
-        name: 'main.cpp',
-        language: 'c++',
-        value: add_const,
-      },
-      'traits/add_const.h': {
-        name: 'traits/add_const.h',
-        language: 'c++',
-        value: ``
-      },
-    },
-    main: 'traits/add_const.h',
-  },
-  {
-    id: 1,
-    title: 'add_cv, add_cv_t',
-    description: '',
-    sources: {
-      'main.cpp': {
-        name: 'main.cpp',
-        language: 'c++',
-        value: add_cv,
-      },
-      'traits/add_cv.h': {
-        name: 'traits/add_cv.h',
-        language: 'c++',
-        value: ``
-      },
-    },
-    main: 'traits/add_cv.h',
-  },
-  {
-    id: 2,
-    title: 'add_volatile, add_volatile_t',
-    description: '',
-    sources: {
-      'main.cpp': {
-        name: 'main.cpp',
-        language: 'c++',
-        value: add_volatile,
-      },
-      'traits/add_volatile.h': {
-        name: 'traits/add_volatile.h',
-        language: 'c++',
-        value: ``
-      },
-    },
-    main: 'traits/add_volatile.h',
-  },
-  {
-    id: 3,
-    title: 'conditional, conditional_t',
-    description: '',
-    sources: {
-      'main.cpp': {
-        name: 'main.cpp',
-        language: 'c++',
-        value: conditional,
-      },
-      'traits/conditional.h': {
-        name: 'traits/conditional.h',
-        language: 'c++',
-        value: ``
-      },
-    },
-    main: 'traits/conditional.h',
-  },
+export function create_main_cpp(sources : Sources, tests: Tests): string {
+  const has_runtime_tests = tests.test_cases.length > 0;
+  const has_compiletime_tests = tests.static_asserts.length > 0;
+  const header_files = Object.keys(sources).filter((key) => {
+    return sources[key].language === 'c++' && (key.endsWith('.h') || key.endsWith('.hpp'));
+  });
+  const runtime_tests = Object.keys(tests.sources).map((name) => tests.sources[name].content).join('\n');
 
-  // {
-  //   id: 1,
-  //   title: 'add_cv, add_cv_t',
-  //   description: '',
-  //   code: '',
-  //   test: add_cv,
-  // },
-  // {
-  //   id: 2,
-  //   title: 'add_volatile, add_volatile_t',
-  //   description: '',
-  //   code: '',
-  //   test: add_volatile,
-  // },
-  // {
-  //   id: 3,
-  //   title: 'conditional, conditional_t',
-  //   description: '',
-  //   code: '',
-  //   test: conditional,
-  // },
-  // {
-  //   id: 4,
-  //   title: 'dependent_type',
-  //   description: '',
-  //   code: '',
-  //   test: dependent_type,
-  // },
-  // {
-  //   id: 5,
-  //   title: 'enable_if',
-  //   description: '',
-  //   code: '',
-  //   test: enable_if,
-  // },
-  // {
-  //   id: 6,
-  //   title: 'integral_constant, true_type, false_type',
-  //   description: '',
-  //   code: '',
-  //   test: integral_constant,
-  // },
-  // {
-  //   id: 7,
-  //   title: 'remove_all_extents',
-  //   description: '',
-  //   code: '',
-  //   test: remove_all_extents,
-  // },
-  // {
-  //   id: 8,
-  //   title: 'remove_const',
-  //   description: '',
-  //   code: '',
-  //   test: remove_const,
-  // },
-  // {
-  //   id: 9,
-  //   title: 'remove_extent',
-  //   description: '',
-  //   code: '',
-  //   test: remove_extent,
-  // }
+  let include_gtest_section = '';
+  let include_headers_section = '';
+  let runtime_tests_section = '';
+  let static_asserts_section = '';
+  let int_main_section = '';
+
+  if (has_compiletime_tests) {
+    static_asserts_section = tests.static_asserts.join('\n');
+  }
+
+  if (header_files.length > 0) {
+    include_headers_section = header_files.map((header) => `#include "${header}"`).join('\n');
+  }
+
+
+  if (has_runtime_tests) {
+    include_gtest_section = `#include "gtest/gtest.h"`;
+
+    runtime_tests_section = runtime_tests;
+
+    int_main_section = 
+`int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+
+  ${static_asserts_section}
+
+  return RUN_ALL_TESTS();
+}`;
+  } else {
+    int_main_section = 
+`int main() {
+  ${static_asserts_section}
+
+  return 0;
+}`;
+  }
+
+  return `${include_gtest_section}
+
+${include_headers_section}
+
+${runtime_tests_section}
+
+${int_main_section}
+
+`
+}
+
+
+//   `
+
+
+
+// #include "gtest/gtest.h"
+
+// #include "foo.h"
+
+// TEST(FakeTest, FakeTest1) {
+//   EXPECT_EQ(foo(), 1);
+// }
+
+// TEST(FakeTest, FakeTest2) {
+//   EXPECT_EQ(bar(), 2);
+// }
+
+// int main(int argc, char **argv) {
+//   ::testing::InitGoogleTest(&argc, argv);
+//   return RUN_ALL_TESTS();
+// }
+
+//   `
+// }
+
+
+
+// challenges for stl from scratch
+export const challenges : IChallenge[] = [
 ];

@@ -12,16 +12,15 @@ const Executor: React.FC<IExecutorProps> = ({theme, output }: IExecutorProps) =>
   
   const [monacoTheme, setMonacoTheme] = useState<string>('vs-dark');
 
-  console.log('Theme: ', theme)
+  console.log('executor');
 
   useEffect(() => {
-    console.log('here')
     setMonacoTheme(theme === 'light' ? 'vs-light' : 'vs-dark');
   }, [theme])
 
   return (
     <div>
-      <MonacoEditor height="500px" value={output} theme={monacoTheme} options={{wordWrap: "on"}}></MonacoEditor>
+      <MonacoEditor height="500px" value={output} theme={monacoTheme} options={{wordWrap: "on", readOnly: true}}></MonacoEditor>
     </div>
   );
 };
