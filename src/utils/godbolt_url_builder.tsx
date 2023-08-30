@@ -117,8 +117,6 @@ export function build_execute_cmake_request(
 
   const cmake_args = '-DCMAKE_BUILD_TYPE=RelWithDebInfo';
 
-
-
   // Define the headers
   const myHeaders = new Headers();
   myHeaders.append('content-type', 'application/json');
