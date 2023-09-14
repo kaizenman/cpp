@@ -31,13 +31,31 @@ export type Sources = {
   [key: string]: SourceFile;
 };
 
-export interface IChallenge {
-  id: number,
-  title: string,
-  description: string,
-  sources: Sources,
-  tests: Tests,
-}
+export type QuizChallenge = {
+  id: number;
+  kind?: "quiz";
+  title: string;
+  description: string;
+  question: string;
+  answers: string[];
+  hints: string[];
+  correct_answer: number;
+  explanation?: string;
+};
+
+export type SourceCodeChallenge = {
+  id: number;
+  kind?: "source_code";
+  title: string;
+  description: string;
+  sources: Sources;
+  tests: Tests;
+  hint?: string;
+  solution?: Sources;
+};
+
+export type Challenge = QuizChallenge | SourceCodeChallenge;
+
 
 export function create_main_cpp(sources : Sources, tests: Tests): string {
   const has_runtime_tests = tests.test_cases.length > 0;
@@ -123,5 +141,5 @@ ${int_main_section}
 
 
 // challenges for stl from scratch
-export const challenges : IChallenge[] = [
+export const challenges : Challenge[] = [
 ];

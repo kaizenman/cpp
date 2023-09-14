@@ -4,7 +4,7 @@ import { declaration_points } from "../pages/class_templates/declaration_points"
 import { dependent_names } from "../pages/class_templates/dependent_names";
 import { concepts } from "../pages/function_templates/concepts";
 import { requirements } from "../pages/function_templates/requirements";
-import { IChallenge } from "../challenges";
+import { Challenge } from "../challenges";
 import Practice from "./Practice";
 import { generic_programming } from "../pages/generic_programming";
 
@@ -14,7 +14,7 @@ interface SubChapter {
   description?: string;
   content: string;
   codeSnippet?: string;
-  challenges?: IChallenge[];
+  challenges?: Challenge[];
 }
 
 export interface IChapter {
@@ -27,7 +27,7 @@ export interface IChapter {
 export interface ITryChallenge {
   id: number;
   title: string;
-  challenge: IChallenge;
+  challenge: Challenge;
   solution: string;
   hint?: string;
 }

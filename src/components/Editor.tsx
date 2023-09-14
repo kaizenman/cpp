@@ -2,7 +2,7 @@ import "../styles.css";
 
 import { useContext, useEffect, useState } from 'react';
 import { default as MonacoEditor } from '@monaco-editor/react';
-import { IChallenge, Sources } from "../challenges";
+import { SourceCodeChallenge, Sources } from "../challenges";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { set } from "lodash";
 import context from "react-bootstrap/esm/AccordionContext";
@@ -10,7 +10,7 @@ import context from "react-bootstrap/esm/AccordionContext";
 interface IEditorProps {
   theme: string;
   fileName: string;
-  challenge: IChallenge;
+  challenge: SourceCodeChallenge;
   onChange: (code: Sources | undefined) => void;
 }
 
